@@ -1,4 +1,4 @@
-# ECEA 5307 Final Project
+# ECEA 5307 Final Project - Yocto
 
 [Project Overview](https://github.com/cu-ecen-aeld/final-project-DomenicP/wiki/Project-Overview)
 
