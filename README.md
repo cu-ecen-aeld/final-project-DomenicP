@@ -1,5 +1,9 @@
-# ECEA 5307 Final Project - Yocto
+# ECEA 5307 Final Project - Yocto Configuration
 
-[Project Overview](https://github.com/cu-ecen-aeld/final-project-DomenicP/wiki/Project-Overview)
+- [Project Overview](https://github.com/cu-ecen-aeld/final-project-DomenicP/wiki/Project-Overview)
+- [Project Schedule](https://github.com/users/DomenicP/projects/1)
 
-This repository hosts the Yocto configuration for the final project. The application source code can be found [here](https://github.com/DomenicP/final-project-assignment-DomenicP).
+## Repositories
+
+- [Yocto Configuration](https://github.com/cu-ecen-aeld/final-project-DomenicP/) (this repo)
+- [Application Code](https://github.com/DomenicP/final-project-assignment-DomenicP)
