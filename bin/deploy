@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+
+set -eo pipefail
+
+THISDIR="$(dirname "$0")"
+. "$THISDIR/common"
+
+check_vars IMAGE MACHINE
+
+SRC="build/tmp/deploy/images/$MACHINE/$IMAGE-$MACHINE.mender"
+DST="/tmp/update.mender"
+
+scp "$SRC" "jetson-dev:$DST"
+
+# shellcheck disable=SC2029
+ssh jetson-dev "mender install $DST"

@@ -18,6 +18,7 @@ Targets:
                             MACHINE=$(MACHINE)
                             DISTRO=$(DISTRO)
                             SD_CARD_SIZE=$(SD_CARD_SIZE)
+    deploy              Deploy and install a Mender update to the target device
     help                (Default) Print usage information and exit
     tegraflash-extract  Extract the tegraflash archive from the latest build
     tegraflash-sdcard   Flash an SD card with the latest build
@@ -33,6 +34,10 @@ build:
 .PHONY: configure
 configure:
 	bin/configure-build
+
+.PHONY: deploy
+deploy:
+	bin/deploy
 
 .PHONY: help
 help:
