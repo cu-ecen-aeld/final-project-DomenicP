@@ -1,0 +1,48 @@
+#!/usr/bin/env bash
+
+REQUIRED_VARS=(
+    DISTRO
+    MACHINE
+    SD_CARD_SIZE
+)
+
+main() {
+    check_env_vars
+    create_build_dir
+    add_layer meta-aesd
+    set_local_conf TEGRAFLASH_SDCARD_SIZE "$SD_CARD_SIZE"
+}
+
+check_env_vars() {
+    for var in "${REQUIRED_VARS[@]}"; do
+        if [ -z "${!var}" ]; then
+            echo "Environment variable '$var' must be set"
+            exit 1
+        fi
+    done
+}
+
+create_build_dir() {
+    echo "Setting up environment with MACHINE=$MACHINE and DISTRO=$DISTRO"
+    . setup-env --machine "$MACHINE" --distro "$DISTRO"
+}
+
+add_layer() {
+    local layer="$1"
+    echo "Adding layer $1"
+    bitbake-layers add-layer "../layers/$layer"
+}
+
+set_local_conf() {
+    local var="$1"
+    local val="$2"
+    
+    echo "Setting $var=$val in local.conf"
+    if grep "$var" conf/local.conf >/dev/null 2>&1; then
+        sed -i "s/$var = \".*\"/$var = \"$val\"/" conf/local.conf
+    else
+        echo "$var = \"$val\"" >> conf/local.conf
+    fi
+}
+
+main "$@"

@@ -1,0 +1,118 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+SHORTOPTS="d:hi:m:"
+LONGOPTS="device:,help,image:,machine:"
+NAME="tegraflash"
+
+print_usage() {
+    cat << EOF
+Usage: $NAME [OPTS] {extract|sdcard}
+
+Options:
+    -d, --device DEVICE     Specify the device to be flashed for the sdcard command
+    -h, --help              Print this help message and exit
+    -i, --image IMAGE       Required: Specify the Yocto image
+    -m, --machine MACHINE   Required: Specify the Yocto machine
+
+Commands:
+    extract     Extract the tegraflash bundle from the latest build
+    sdcard      Flash an SD card with the extracted tegraflash content
+EOF
+}
+
+if ! ARGS=$(getopt -o "$SHORTOPTS" -l "$LONGOPTS" -n "$NAME" -- "$@"); then
+    echo "ERR: could not parse args"
+    print_usage
+    exit 1
+fi
+
+eval set -- "$ARGS"
+unset ARGS
+
+DEVICE=""
+IMAGE=""
+MACHINE=""
+
+while true; do
+    case "$1" in
+        -d|--device)
+            DEVICE="$2"
+            shift 2
+            continue
+            ;;
+        -h|--help)
+            print_usage
+            exit 0
+            ;;
+        -i|--image)
+            IMAGE="$2"
+            shift 2
+            continue
+            ;;
+        -m|--machine)
+            MACHINE="$2"
+            shift 2
+            continue
+            ;;
+        --)
+            shift
+            break
+            ;;
+        *)
+            echo "ERR: bad argument $1"
+            print_usage
+            exit 1
+            ;;
+    esac
+done
+
+if [ -z "$IMAGE" ]; then
+    echo "ERR: IMAGE must be specified"
+    print_usage
+    exit 1
+fi
+
+if [ -z "$MACHINE" ]; then
+    echo "ERR: MACHINE must be specified"
+    print_usage
+    exit 1
+fi
+
+DEPLOY_DIR="build/tmp/deploy/images/$MACHINE"
+
+main() {
+    if [ "$#" -ne 1 ]; then
+        echo "ERR: command must be specified"
+        print_usage
+        exit 1
+    fi
+    local command="$1"
+    case "$command" in
+        extract) do_extract ;;
+        sdcard) do_sdcard ;;
+    esac
+}
+
+do_extract() {
+    echo "Entering $DEPLOY_DIR"
+    cd "$DEPLOY_DIR" || exit 1
+    echo "Extracting tegraflash bundle to $DEPLOY_DIR/tegraflash"
+    sudo rm -rf tegraflash
+    mkdir tegraflash
+    tar -C tegraflash -xzvf "$IMAGE-$MACHINE.tegraflash.tar.gz"
+}
+
+do_sdcard() {
+    if [ -z "$DEVICE" ]; then
+        echo "ERR: DEVICE must be specified"
+        print_usage
+        exit 1
+    fi
+    echo "Entering $DEPLOY_DIR/tegraflash"
+    cd "$DEPLOY_DIR/tegraflash" || exit 1
+    sudo ./dosdcard.sh "$DEVICE"
+}
+
+main "$@"
