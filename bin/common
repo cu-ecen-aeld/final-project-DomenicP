@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+
+check_vars() {
+    local vars=("$@")
+    local status=0
+    for var in "${vars[@]}"; do
+        if [ -z "${!var}" ]; then
+            echo "'$var' must be set"
+            status=1
+        fi
+    done
+    if [ $status -ne 0 ]; then
+        exit $status
+    fi
+}

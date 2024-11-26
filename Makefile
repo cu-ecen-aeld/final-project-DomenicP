@@ -5,6 +5,7 @@ export MACHINE ?= jetson-nano-devkit
 export DISTRO ?= tegrademo-mender
 export IMAGE ?= demo-image-base
 export SD_CARD_SIZE ?= 64G
+export DATA_PART_SIZE_MB ?= 51200
 
 TEGRAFLASH_ARGS := -m $(MACHINE) -i $(IMAGE)
 
@@ -18,6 +19,8 @@ Targets:
                             MACHINE=$(MACHINE)
                             DISTRO=$(DISTRO)
                             SD_CARD_SIZE=$(SD_CARD_SIZE)
+                            DATA_PART_SIZE_MB=$(DATA_PART_SIZE_MB)
+    deploy              Deploy and install a Mender update to the target device
     help                (Default) Print usage information and exit
     tegraflash-extract  Extract the tegraflash archive from the latest build
     tegraflash-sdcard   Flash an SD card with the latest build
@@ -33,6 +36,10 @@ build:
 .PHONY: configure
 configure:
 	bin/configure-build
+
+.PHONY: deploy
+deploy:
+	bin/deploy
 
 .PHONY: help
 help:

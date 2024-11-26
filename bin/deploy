@@ -1,0 +1,21 @@
+#!/usr/bin/env bash
+
+set -eo pipefail
+
+THISDIR="$(dirname "$0")"
+. "$THISDIR/common"
+
+check_vars IMAGE MACHINE
+
+SRC="build/tmp/deploy/images/$MACHINE/$IMAGE-$MACHINE.mender"
+DST="/tmp/update.mender"
+
+echo "Copying Mender artifact $SRC to jetson-dev"
+scp "$SRC" "jetson-dev:$DST"
+
+echo "Running 'mender install' on jetson-dev"
+# shellcheck disable=SC2029
+ssh jetson-dev "mender install $DST"
+
+echo "Rebooting jetson-dev"
+ssh jetson-dev "reboot" || true

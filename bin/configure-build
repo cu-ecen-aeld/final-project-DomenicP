@@ -1,25 +1,17 @@
 #!/usr/bin/env bash
 
-REQUIRED_VARS=(
-    DISTRO
-    MACHINE
-    SD_CARD_SIZE
-)
+set -eo pipefail
+
+THISDIR="$(dirname "$0")"
+. "$THISDIR/common"
 
 main() {
-    check_env_vars
+    check_vars DISTRO MACHINE SD_CARD_SIZE DATA_PART_SIZE_MB
     create_build_dir
     add_layer meta-aesd
     set_local_conf TEGRAFLASH_SDCARD_SIZE "$SD_CARD_SIZE"
-}
-
-check_env_vars() {
-    for var in "${REQUIRED_VARS[@]}"; do
-        if [ -z "${!var}" ]; then
-            echo "Environment variable '$var' must be set"
-            exit 1
-        fi
-    done
+    set_local_conf MENDER_DATA_PART_SIZE_MB "$DATA_PART_SIZE_MB"
+    set_local_conf GST_VERSION 1.20.%
 }
 
 create_build_dir() {
