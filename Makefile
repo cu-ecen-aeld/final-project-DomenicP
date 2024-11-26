@@ -5,7 +5,7 @@ export MACHINE ?= jetson-nano-devkit
 export DISTRO ?= tegrademo-mender
 export IMAGE ?= demo-image-base
 export SD_CARD_SIZE ?= 64G
-export DATA_PART_SIZE_MB ?= 40960
+export DATA_PART_SIZE_MB ?= 51200
 
 TEGRAFLASH_ARGS := -m $(MACHINE) -i $(IMAGE)
 
