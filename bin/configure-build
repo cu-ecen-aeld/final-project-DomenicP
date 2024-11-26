@@ -6,10 +6,11 @@ THISDIR="$(dirname "$0")"
 . "$THISDIR/common"
 
 main() {
-    check_vars DISTRO MACHINE SD_CARD_SIZE
+    check_vars DISTRO MACHINE SD_CARD_SIZE DATA_PART_SIZE_MB
     create_build_dir
     add_layer meta-aesd
     set_local_conf TEGRAFLASH_SDCARD_SIZE "$SD_CARD_SIZE"
+    set_local_conf MENDER_DATA_PART_SIZE_MB "$DATA_PART_SIZE_MB"
     set_local_conf GST_VERSION 1.20.%
 }
 
