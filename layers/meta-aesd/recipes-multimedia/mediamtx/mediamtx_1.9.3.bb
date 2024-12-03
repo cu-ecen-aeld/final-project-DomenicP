@@ -18,6 +18,8 @@ S = "${WORKDIR}"
 
 inherit systemd
 
+SYSTEMD_SERVICE:${PN} = "mediamtx.service"
+
 do_install () {
     install -d "${D}${bindir}"
     install -m 755 "${S}/mediamtx" "${D}${bindir}/"
