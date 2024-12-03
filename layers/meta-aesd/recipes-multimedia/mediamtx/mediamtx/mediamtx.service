@@ -1,0 +1,9 @@
+[Unit]
+Description=Media server and proxy for audio and video streams
+After=network.target
+
+[Service]
+ExecStart=/usr/bin/mediamtx /etc/mediamtx.yml
+
+[Install]
+WantedBy=multi-user.target
