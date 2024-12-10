@@ -8,7 +8,7 @@ SRC_URI = "git://github.com/DomenicP/final-project-assignment-DomenicP.git;proto
            "
 
 PV = "0.1.0+git${SRCPV}"
-SRCREV = "f7bc8c531789698d34d56826af0c3f1b00d8d15d"
+SRCREV = "20916fd6c1753193f9e74f26567a4ba5c0f6fec1"
 
 S = "${WORKDIR}/git/web-server"
 
@@ -21,4 +21,7 @@ do_install:append() {
     install -m 644 "${WORKDIR}/web-server.service" "${D}${systemd_system_unitdir}/"
 }
 
-RDEPENDS:${PN} = "python3-flask python3-gunicorn"
+RDEPENDS:${PN} = "python3-flask \
+                  python3-flask-sock \
+                  python3-gunicorn \
+                  "
