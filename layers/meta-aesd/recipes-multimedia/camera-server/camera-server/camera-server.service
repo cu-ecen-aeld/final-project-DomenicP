@@ -1,0 +1,10 @@
+[Unit]
+Description=Basic GStreamer pipeline for camera server
+Wants=mediamtx.service
+After=mediamtx.service
+
+[Service]
+ExecStart=@LIBEXECDIR@/camera-server/pipeline.sh
+
+[Install]
+WantedBy=multi-user.target
