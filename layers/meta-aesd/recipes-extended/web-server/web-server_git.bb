@@ -8,7 +8,7 @@ SRC_URI = "git://github.com/DomenicP/final-project-assignment-DomenicP.git;proto
            "
 
 PV = "0.1.0+git${SRCPV}"
-SRCREV = "20916fd6c1753193f9e74f26567a4ba5c0f6fec1"
+SRCREV = "35b4560e8900ae74b39589ceef9595378f731448"
 
 S = "${WORKDIR}/git/web-server"
 
@@ -24,4 +24,5 @@ do_install:append() {
 RDEPENDS:${PN} = "python3-flask \
                   python3-flask-sock \
                   python3-gunicorn \
+                  python3-pyzmq \
                   "

@@ -1,10 +1,10 @@
 [Unit]
-Description=Basic GStreamer pipeline for camera server
+Description=Server to manage GStreamer pipelines
 Wants=mediamtx.service
 After=mediamtx.service
 
 [Service]
-ExecStart=@LIBEXECDIR@/camera-server/pipeline.sh
+ExecStart=python3 -u -m camera_server
 
 [Install]
 WantedBy=multi-user.target
