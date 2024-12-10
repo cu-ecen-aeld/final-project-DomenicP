@@ -31,7 +31,6 @@ do_install () {
     install -m 644 "${S}/mediamtx.service" "${D}${systemd_system_unitdir}"
 }
 
-FILES:${PN} = "${bindir}/mediamtx \
-               ${sysconfdir}/mediamtx.yml \
-               ${systemd_system_unitdir}/mediamtx.service \
-               "
+FILES:${PN} += "${bindir}/mediamtx \
+                ${sysconfdir}/mediamtx.yml \
+                "

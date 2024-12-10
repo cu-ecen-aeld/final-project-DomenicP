@@ -16,6 +16,3 @@ scp "$SRC" "jetson-dev:$DST"
 echo "Running 'mender install' on jetson-dev"
 # shellcheck disable=SC2029
 ssh jetson-dev "mender install $DST"
-
-echo "Rebooting jetson-dev"
-ssh jetson-dev "reboot" || true

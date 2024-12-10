@@ -20,7 +20,7 @@ do_install() {
     sed -i -e "s,@LIBEXECDIR@,${libexecdir},g" "${D}${systemd_system_unitdir}/camera-server.service"
 }
 
-FILES:${PN} = "${libexecdir}/camera-server ${systemd_system_unitdir}/camera-server.service"
+FILES:${PN} += "${libexecdir}/camera-server"
 
 RDEPENDS:${PN} = "gstreamer1.0 \
                   gstreamer1.0-plugins-bad \
